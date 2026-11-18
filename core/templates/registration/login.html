@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% block title %}Connexion — RugbyVision AI{% endblock %}
+{% block content %}
+<div class="login-layout">
+    <section class="login-intro">
+        <p class="eyebrow">Votre espace club</p>
+        <h1>Retour<br>au jeu.</h1>
+        <p class="intro">Connectez-vous à votre compte RugbyVision.</p>
+        <a class="text-link back-link" href="{% url 'core:home' %}"><span aria-hidden="true">←</span> Retour à l’accueil</a>
+    </section>
+    <section class="login-panel" aria-labelledby="login-title">
+        <h2 id="login-title">Connexion</h2>
+        <p class="muted small">Utilisez vos identifiants personnels.</p>
+        {% if form.errors %}
+        <div class="form-error" role="alert" id="login-error">Identifiant ou mot de passe incorrect. Veuillez réessayer.</div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="id_username">Identifiant</label>
+                <input type="text" name="username" id="id_username" value="{{ form.username.value|default_if_none:'' }}" autocomplete="username" maxlength="150" required autofocus {% if form.errors %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+            </div>
+            <div class="field">
+                <label for="id_password">Mot de passe</label>
+                <input type="password" name="password" id="id_password" autocomplete="current-password" required {% if form.errors %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button class="button submit-button" type="submit">Se connecter <span aria-hidden="true">↗</span></button>
+        </form>
+    </section>
+</div>
+{% endblock %}
