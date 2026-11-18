@@ -11,6 +11,19 @@
         <h2 id="workspace-title">Votre espace</h2>
         <span class="small muted">{{ user.get_full_name|default:user.username }}</span>
     </div>
+    <div class="club-list">
+        {% for membership in memberships %}
+        <div class="club-row">
+            <div>
+                <h3>{{ membership.club.name }}</h3>
+                <p>{{ membership.club.division.name }}</p>
+            </div>
+            <span class="club-role">{{ membership.get_role_display }}</span>
+        </div>
+        {% empty %}
+        <p class="muted small">Aucun club associé à votre compte. Contactez votre responsable pour être rattaché à votre club.</p>
+        {% endfor %}
+    </div>
     <div class="empty-state">
         <span class="index">01 / MATCHS</span>
         <h3>Votre saison commence ici.</h3>

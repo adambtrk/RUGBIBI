@@ -39,6 +39,11 @@ h1 { font-size: clamp(40px, 5.2vw, 68px); font-weight: 550; line-height: 1.08; l
 .principles h2 { font-size: 20px; font-weight: 550; margin: 16px 0 8px; letter-spacing: -.4px; }
 .principles p { font-size: 14px; color: var(--muted); max-width: 270px; margin: 0; }
 .workspace { margin-top: 56px; border-top: 1px solid var(--line); }
+.club-list { padding-top: 12px; }
+.club-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.club-row h3 { margin: 0; font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.club-row p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+.club-role { color: var(--accent); font-size: 12px; }
 .section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .section-heading h2 { font-size: 17px; font-weight: 600; margin: 0; }
 .section-heading span { overflow-wrap: anywhere; min-width: 0; }
