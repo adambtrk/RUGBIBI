@@ -15,6 +15,7 @@
             <a class="wordmark" href="{% url 'core:home' %}" aria-label="RugbyVision AI — Accueil">rugbyvision<span class="brand-dot" aria-hidden="true">.</span></a>
             <nav aria-label="Navigation principale">
                 {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'matches:list' %}">Vidéos</a>
                     <span class="account-name">{{ user.get_short_name|default:user.username }}</span>
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -28,5 +29,6 @@
         <main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
         <footer class="site-footer"><span>RugbyVision AI</span><span>Au plus près du jeu.</span></footer>
     </div>
+{% block scripts %}{% endblock %}
 </body>
 </html>

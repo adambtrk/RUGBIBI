@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% block title %}Vidéos — RugbyVision AI{% endblock %}
+{% block content %}
+<p class="eyebrow">Analyse vidéo</p>
+<h1>Les matchs.</h1>
+<p class="intro">Importez votre vidéo, puis retrouvez le jeu à votre rythme.</p>
+<div class="video-library">
+    <section aria-labelledby="library-title">
+        <div class="section-heading"><h2 id="library-title">Vos vidéos</h2></div>
+        {% for match in matches %}
+        <a class="match-row" href="{% url 'matches:detail' match.pk %}">
+            <div><h3>{{ match.title }}</h3><p>{{ match.played_on|date:"d F Y" }}</p></div>
+            <span aria-hidden="true">↗</span>
+        </a>
+        {% empty %}
+        <div class="empty-state"><h3>Le terrain est libre.</h3><p>Ajoutez votre premier match avec le formulaire ci-contre.</p></div>
+        {% endfor %}
+    </section>
+    <section class="upload-panel" aria-labelledby="upload-title">
+        <h2 id="upload-title">Importer un match</h2>
+        <p class="small muted">MP4 · 8 Go maximum. La vidéo reste privée.</p>
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+            {% csrf_token %}
+            {% if form.errors %}<div class="form-error" role="alert">L’import n’a pas été effectué. Vérifiez les champs ci-dessous.{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form %}
+            <div class="field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+            {% endfor %}
+            <button class="button submit-button" type="submit" id="upload-button">Importer la vidéo <span aria-hidden="true">↗</span></button>
+            <p id="upload-status" class="small muted" role="status" hidden>Import en cours. Gardez cette page ouverte ; un match complet peut prendre plusieurs minutes.</p>
+        </form>
+        <p class="small muted">Importez uniquement les vidéos que vous êtes autorisé à utiliser. Pour une lecture dans le navigateur, privilégiez le MP4 H.264 / AAC.</p>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('upload-form').addEventListener('submit', function () {
+    document.getElementById('upload-button').disabled = true;
+    document.getElementById('upload-button').textContent = 'Import en cours…';
+    document.getElementById('upload-status').hidden = false;
+});
+</script>
+{% endblock %}

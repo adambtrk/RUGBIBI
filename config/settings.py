@@ -128,3 +128,9 @@ TIME_ZONE = "Europe/Paris"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "core:home"
 LOGOUT_REDIRECT_URL = "core:home"
+
+MEDIA_ROOT = BASE_DIR / "private_media"
+
+# Limite de taille du fichier gardée en mémoire pendant un import.
+# Au-delà, Django utilise un fichier temporaire sur le disque.
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024

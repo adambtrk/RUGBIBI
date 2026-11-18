@@ -39,7 +39,8 @@ Les tests utilisent une base temporaire et des données fictives.
 
 - Fait : utilisateur personnalisé, connexion/déconnexion, accueil et style commun.
 - Fait : divisions, clubs, adhésions, rôles par club, administration et tests.
-- À venir : matchs et joueurs, vidéos protégées, timeline et annotation manuelle.
+- Fait : import de matchs MP4, liste privée, lecteur avec navigation temporelle.
+- À venir : timeline collective, annotation des intervalles et export du dataset.
 - Ensuite : statistiques, dataset, modèle de vision et validation humaine.
 
 Configuration actuelle destinée au développement local.
@@ -48,3 +49,27 @@ La division (ex. Régionale 1, Fédérale 3) est renseignée sur le club.
 Le joueur la retrouve par son adhésion au club. Ce premier modèle suppose
 une division par club ; les équipes réserve et les changements par saison
 seront à gérer lors de la création des équipes et saisons.
+
+## Import et lecture vidéo
+
+Après connexion, ouvrir `/matches/`, renseigner le titre et la date, puis importer
+un MP4 (limite actuelle : 8 Go). Les fichiers restent dans `private_media/`,
+exclu de Git. Ne pas configurer de route publique MEDIA en développement.
+Le propriétaire et les superutilisateurs peuvent consulter un match. Le partage
+au club sera ajouté ultérieurement ; les comptes existants servent à protéger
+les fichiers, sans développer de nouveaux parcours de connexion.
+
+Le serveur vérifie l'extension, la taille, les boîtes du conteneur MP4 et la
+présence d'une piste vidéo. Il ne décode pas le fichier et ne certifie donc ni
+son intégrité complète ni la compatibilité de son codec. Privilégier H.264/AAC.
+Les tests utilisent des conteneurs synthétiques non lisibles ; la lecture réelle
+doit être vérifiée avec un MP4 Veo.
+
+Le lecteur utilise une route protégée acceptant les requêtes HTTP Range pour
+naviguer sans charger le match entier en mémoire. Les boutons permettent de
+reculer/avancer de 10 secondes, changer la vitesse et saisir un temps vidéo en
+minutes:secondes. Aucun événement n'est encore détecté automatiquement.
+
+Pour un match complet, vérifier l'espace disque disponible (fichier temporaire
+d'import et copie finale). Cette première version est destinée au serveur local ;
+les imports reprenables et le service vidéo en production restent à concevoir.
